@@ -23,7 +23,7 @@ public abstract class GPSFormat implements Serializable{
 	public String toString() {
 		String result = "";
 		//result += "Date="+getDate()+" longitude="+getLongitude()+" latitude="+getLatitude()+" height ="+getHeight();
-		result = "["+getLatitude()+","+getLongitude()+"]";
+		result = "["+getTime()+","+getLatitude()+","+getLongitude()+"]";
 		return result;
 	}
 
@@ -74,6 +74,11 @@ public abstract class GPSFormat implements Serializable{
 		}
 		else return false;
 	}
+	
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
 
 
 	public double getX(){
@@ -94,5 +99,10 @@ public abstract class GPSFormat implements Serializable{
 	}
 	public void setTime(long time) {
 		this.time = time;
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return new SimpleFormat(getTime(), getLatitude(), getLongitude());
 	}
 }

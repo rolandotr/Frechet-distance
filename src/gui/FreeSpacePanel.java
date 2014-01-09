@@ -7,14 +7,15 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.Area;
 
-import trajectory.Trajectory;
 import wrappers.Rectangle;
+import wrappers.Trajectory;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import distances.FretcherDistance.Cell;
+import distances.Distance;
+import distances.Cell;
 
 
 
@@ -26,6 +27,7 @@ public abstract class FreeSpacePanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 5873159664258016347L;
 	protected Cell[][] freeSpace;
+	protected Distance distance;
 	
 	protected FreeSpacePanel() {
 		this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));

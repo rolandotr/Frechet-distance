@@ -1,12 +1,9 @@
 package exceptions;
 
+import wrappers.LogFormat;
 
 public class IncorrectLineFormatException extends RuntimeException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -922285232814953087L;
 	public String line;
 	
 	public IncorrectLineFormatException(String msg, String line) {

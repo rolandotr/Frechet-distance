@@ -3,9 +3,11 @@ package exceptions;
 
 public class InconsistencyTimeException extends RuntimeException {
 
-	private static final long serialVersionUID = -5421919331940054545L;
-
-	public InconsistencyTimeException(long timeStamp){
-		super("Time-stamp "+timeStamp+" has been already inserted");
+	public long time;
+	
+	public InconsistencyTimeException(long time){
+		super("La fecha "+time+" ya esta en el arbol y por tanto eso" +
+						"significa que hay dos fechas para un mismo punto");
+		time = time;
 	}
 }

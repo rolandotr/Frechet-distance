@@ -1,0 +1,30 @@
+! limits for input fields
+MIN_MAXTIME = 1
+MAX_MAXTIME = 100
+MAX_OBJCLASSES = 6
+MAX_OBJPERTIME = 10
+MAX_OBJBEGIN = 200
+MAX_EXTOBJCLASSES = 3
+MAX_EXTOBJPERTIME = 3
+MAX_EXTOBJBEGIN = 10
+
+! setting of the generator
+urlnez = D:\\current_work\\Workspace\\frechet_distance_current\\generator\\oldenburgGen
+!urlnez = D:\\Trabajo\\trayectories\\generator\\oldenburgGen
+!urlnez = Daten\\oldenburgGen
+!waitingPeriod = 1
+!DSO
+VIZ
+outputFile = syntetic.txt
+!seed = 123
+
+! setting of the applet
+baseScaleFactor = 1250
+maxScale = 1
+minScale = 64
+scale = 64
+viewWidth = 500
+viewHeight = 500
+language = E
+color = white
+mapColor = white

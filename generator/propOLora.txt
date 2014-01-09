@@ -1,0 +1,37 @@
+! limits for input fields
+MIN_MAXTIME = 5
+MAX_MAXTIME = 8000
+MAX_OBJCLASSES = 20
+MAX_OBJPERTIME = 500
+MAX_OBJBEGIN = 1000
+MAX_EXTOBJCLASSES = 10
+MAX_EXTOBJPERTIME = 30
+MAX_EXTOBJBEGIN = 100
+
+! settings of the generator
+urlnez = ..\\data\\oldenburg\\oldenburgGen
+DSO
+!VIZ
+! setting of the applet
+baseScaleFactor = 1250
+maxScale = 1
+minScale = 64
+scale = 64
+viewWidth = 500
+viewHeight = 500
+language = E
+color = white
+mapColor = white
+
+! settings of the oracle database
+dbDriverClassName = oracle.jdbc.driver.OracleDriver
+dbConnectionName = jdbc:oracle:oci8:@geodata
+dbUserName = scott
+dbPassword = tiger
+dbMovingObjectTableName = movingobjects
+dbExternalObjectTableName = externalobjects
+
+! settings of the map in oracle spatial
+dbStreetTableName = streets
+dbStreetGeomName = geometry
+dbStreetClassName = class

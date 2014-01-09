@@ -7,10 +7,12 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
+import util.Converter;
 import util.Interpolation;
 import wrappers.Rectangle;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
+
 import java.io.File;
 import java.io.IOException;
 import javax.swing.Timer;
@@ -52,6 +54,8 @@ public class TrajectoryPanel extends JPanel{
 	}
 
 	public void paint(Graphics g){
+		super.paint(g);
+		if (trajectory1 == null && trajectory2 == null) return;
 		java.awt.Rectangle bound = g.getClipBounds();
 		bound.x += 20;
 		bound.y -= 20;
@@ -60,7 +64,6 @@ public class TrajectoryPanel extends JPanel{
 		Rectangle trajectoryRectangle = getRectangle(trajectory1, trajectory2);
 		/*animationPanel.setClipBound(bound);
 		animationPanel.setRectangleBound(trajectoryRectangle);*/
-		super.paint(g);
 		if (trajectory1 != null && trajectory2 != null){
 			//System.out.println(bound.toString());
 			paint(g, trajectory1, trajectory2, Color.black, Color.red, Color.yellow, Color.blue, 
@@ -174,6 +177,7 @@ public class TrajectoryPanel extends JPanel{
 			return (int)p.getLatitude();
 		}
 	}
+	
 	private int getY(GPSFormat p){
 		if (distance instanceof GPSDistance){
 			return (int)(p.getLongitude()*10000);
@@ -193,6 +197,11 @@ public class TrajectoryPanel extends JPanel{
 		//GPXParser.parseXMLFile(file.getAbsolutePath(), ((SimpleTrajectory)trajectory1).getTree());
 		try{
 			TxtParser.parseTxtFile(file, ((SimpleTrajectory)trajectory1).getTree());
+			System.out.println(trajectory1.size());
+			/*for (GPSFormat p : trajectory1.points()) {
+				double[] l = Converter.degreesToXYZ(p);
+				System.out.println("x = "+l[0]+", y = "+l[1]+", z = "+l[2]);
+			}*/
 		}catch(IOException exc){
 			JOptionPane.showConfirmDialog(this, "File "+file.getName()+" could not be properly read");
 		}
@@ -204,6 +213,7 @@ public class TrajectoryPanel extends JPanel{
 		/*GPXParser.parseXMLFile(file.getAbsolutePath(), ((SimpleTrajectory)trajectory2).getTree());*/
 		try{
 			TxtParser.parseTxtFile(file, ((SimpleTrajectory)trajectory2).getTree());
+			System.out.println(trajectory2.size());
 		}catch(IOException exc){
 			JOptionPane.showConfirmDialog(this, "File "+file.getName()+" could not be properly read");
 		}
@@ -214,121 +224,32 @@ public class TrajectoryPanel extends JPanel{
 		this.distance = distance;
 	}
 	
-	/*class AnimationPanel extends JPanel{
-
-		double[][] trajectories;
-		GPSFormat[] t1, t2;
-		int x1, x2, y1, y2;
-		private int pos;
-		private Timer timer;
-		java.awt.Rectangle bound;
-		Rectangle trajectoryRectangle;
-		
-		public void setTrajectories(double[][] trajectories, Trajectory trajectory1, 
-				Trajectory trajectory2){
-			this.trajectories = trajectories;
-			this.t1 = new GPSFormat[trajectories[0].length];
-			this.t2 = new GPSFormat[trajectories[1].length];
-			for (int i = 0; i < trajectories[0].length; i++){
-				this.t1[i] = Sync.interpolate(trajectory1, (long)trajectories[0][i]);
-				this.t2[i] = Sync.interpolate(trajectory2, (long)trajectories[1][i]);
-			}
-			pos = -1;
-			timer = new Timer(1000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					repaint();
-					pos++;
-				}
-			});
-			timer.start();
-		}
-		
-		public void setRectangleBound(Rectangle trajectoryRectangle) {
-			this.trajectoryRectangle = trajectoryRectangle;
-		}
-
-		public void setClipBound(java.awt.Rectangle bound) {
-			this.bound = bound;
-		}
-
-		@Override
-		public void paint(Graphics g) {
-			//super.paint(g);
-			//System.out.println("Painting "+trajectories);
-			if (trajectories == null) return;
-			if (pos == trajectories[0].length){
-				pos = 0;
-				trajectories = null;
-				timer.stop();
-			}
-			if (pos < 0) return;
-			System.out.println("pos = "+pos+" points are "+t1[pos]+"->"+t2[pos]);
-			//bound = g.getClipBounds(bound);
-			paint(g, t1[pos], t2[pos], Color.red, Color.black, bound, trajectoryRectangle);
-		}
-		
-		protected void paint(Graphics g, GPSFormat p1, GPSFormat p2, Color point, Color line, 
-				java.awt.Rectangle bound, Rectangle trajectoryRectangle) {
-			System.out.println(bound.toString());
-			double x;
-			double y;
-			double z;
-			double lastX = 0;
-			double lastY = 0;
-			if (trajectoryRectangle.width == 0) z = 0;
-			else z = bound.getWidth()/trajectoryRectangle.width;
-			lastX = (int)(bound.x+(getX(p1)-trajectoryRectangle.x)*z);
-			if (trajectoryRectangle.height == 0) z = 0;
-			else z = bound.getHeight()/trajectoryRectangle.height;
-			lastY = (int)(bound.y+(getY(p1)-trajectoryRectangle.y)*z);
-			lastY = bound.getHeight()-lastY;
-			if (trajectoryRectangle.width == 0) z = 0;
-			else z = bound.getWidth()/trajectoryRectangle.width;
-			x = (int)(bound.x+(getX(p2)-trajectoryRectangle.x)*z);
-			if (trajectoryRectangle.height == 0) z = 0;
-			else z = bound.getHeight()/trajectoryRectangle.height;
-			y = (int)(bound.y+(getY(p2)-trajectoryRectangle.y)*z);
-			y = bound.getHeight()-y;
-			g.setColor(point);
-			g.fillOval((int)x-3, (int)y-3, 6, 6);
-			g.fillOval((int)lastX-3, (int)lastY-3, 6, 6);
-			g.setColor(line);
-			g.drawLine((int)lastX, (int)lastY, (int)x, (int)y);
-		}
-
-		private int getX(GPSFormat p){
-			if (distance instanceof GPSDistance){
-				return (int)(p.getLatitude()*10000);
-			}
-			else{
-				return (int)p.getLatitude();
-			}
-		}
-		private int getY(GPSFormat p){
-			if (distance instanceof GPSDistance){
-				return (int)(p.getLongitude()*10000);
-			}
-			else{
-				return (int)p.getLongitude();
-			}
-		}
-	}*/
 	double[][] trajectories;
 	GPSFormat[] t1, t2;
 	int pos = -1;
 	Timer timer;
-	private final int STEP = 100;
+	private final int POINTS = 1000;
+	
 	
 	public void setAnimation(double[][] trajectories) {
 		this.trajectories = trajectories;
-		this.t1 = new GPSFormat[(trajectories[0].length-1)*STEP];
-		this.t2 = new GPSFormat[(trajectories[1].length-1)*STEP];
-		for (int i = 0; i < t1.length; i++){
-			double time1 = trajectories[0][i / STEP]+
-				(trajectories[0][i / STEP + 1]-trajectories[0][i / STEP])*(i % STEP)/STEP;
+		//this.t1 = new GPSFormat[(trajectories[0].length-1)*STEP];
+		//this.t2 = new GPSFormat[(trajectories[1].length-1)*STEP];
+		this.t1 = new GPSFormat[POINTS+1];
+		this.t2 = new GPSFormat[POINTS+1];
+		double iniT1 = trajectories[0][0];
+		double iniT2 = trajectories[1][0];
+		double endT1 = trajectories[0][trajectories[0].length-1];
+		double endT2 = trajectories[1][trajectories[1].length-1];
+		for (int i = 0; i <= POINTS; i++){
+			/*
+			 double time1 = trajectories[0][i / STEP]+
+			 	(trajectories[0][i / STEP + 1]-trajectories[0][i / STEP])*(i % STEP)/STEP;
 			double time2 = trajectories[1][i / STEP]+
-			(trajectories[1][i / STEP + 1]-trajectories[1][i / STEP])*(i % STEP)/STEP;
+				(trajectories[1][i / STEP + 1]-trajectories[1][i / STEP])*(i % STEP)/STEP;
+			*/
+			double time1 = iniT1+(endT1-iniT1)*i/POINTS;
+			double time2 = iniT2+(endT2-iniT2)*i/POINTS;
 			this.t1[i] = Interpolation.interpolate(trajectory1, (long)time1);
 			this.t2[i] = Interpolation.interpolate(trajectory2, (long)time2);
 		}
@@ -343,6 +264,54 @@ public class TrajectoryPanel extends JPanel{
 		timer.start();
 	}
 
+	/***Trujillo- Oct 26, 2012
+	 * Esto tienes que arreglarlo bien, esta es mas o menos la version correcta
+	 * pero necesita mejoras, por el momento la tengo comentada y dejo la vieja
+	 * que no es correcta pero se va mas bonita.
+	 */
+	/*
+	public void setAnimation(double[][] trajectories) {
+		this.trajectories = trajectories;
+		//this.t1 = new GPSFormat[(trajectories[0].length-1)*STEP];
+		//this.t2 = new GPSFormat[(trajectories[1].length-1)*STEP];
+		this.t1 = new GPSFormat[POINTS+1];
+		this.t2 = new GPSFormat[POINTS+1];
+		double iniT1 = trajectories[0][0];
+		double iniT2 = trajectories[1][0];
+		double endT1 = trajectories[0][trajectories[0].length-1];
+		double endT2 = trajectories[1][trajectories[1].length-1];
+		int index = 1;
+		for (int i = 0; i <= POINTS; i++){
+			double time1 = iniT1+(endT1-iniT1)*i/POINTS;
+			//ahora voy a buscar el punto que se acerca a este time
+			for (int j = index; j < trajectories[0].length; j++){
+				if (time1 == trajectories[0][j-1]){
+					index = j;
+					break;
+				}
+				else if (time1 <= trajectories[0][j] && time1 > trajectories[0][j-1]){
+					index = j;
+					break;
+				}
+				if (time1 < trajectories[0][j])
+					throw new RuntimeException();
+			}
+			double time2 = trajectories[1][index];
+			//System.out.println("time1 = "+time1+", time2 = "+time2);
+			this.t1[i] = Interpolation.interpolate(trajectory1, (long)time1);
+			this.t2[i] = Interpolation.interpolate(trajectory2, (long)time2);
+		}
+		pos = -1;
+		timer = new Timer(10, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				repaint();
+				pos++;
+			}
+		});
+		timer.start();
+	}*/
+
 
 	boolean animating = false;
 	
@@ -353,6 +322,32 @@ public class TrajectoryPanel extends JPanel{
 	public boolean isAnimating() {
 		return animating;
 	}
+
+	public Distance getDistance() {
+		return distance;
+	}
+
+	public double[][] getMonoticCurves() {
+		return trajectories;
+	}
+
+	public void setFirstTrajectory(Trajectory trajectory) {
+		trajectory1 = trajectory;
+		repaint();
+	}
+
+	public void setSecondTrajectory(Trajectory trajectory) {
+		trajectory2 = trajectory;
+		repaint();
+	}
+
+	public Trajectory getFirstTrajectory() {
+		return trajectory1;
+	}
+	public Trajectory getSecondTrajectory() {
+		return trajectory2;
+	}
+
 
 
 }

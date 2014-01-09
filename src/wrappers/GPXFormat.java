@@ -1,8 +1,16 @@
 package wrappers;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import exceptions.IncorrectLineFormatException;
 
@@ -23,10 +31,6 @@ import exceptions.IncorrectLineFormatException;
 
 public class GPXFormat extends GPSFormat{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -9185589568399984972L;
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 
 

@@ -1,7 +1,29 @@
 package util;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.TreeMap;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import parsers.GPXParser;
+import parsers.TxtParser;
+
+import distances.GPSDistance;
+import wrappers.GPSFormat;
+import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
+
 public class Converter {
 
+	private static final int SCALE = 1;
+	public static final double RADIOUS = 6378.8;
+	//public static final double RADIOUS = 0;
+	
 	public static double minutesToDegrees(MinutesCoordinates coord){
 		double result = coord.getSec()/60;
 		result += coord.getMinutes();
@@ -27,67 +49,95 @@ public class Converter {
 		return new MinutesCoordinates(intValue, minutes, sec);
 	}
 	
-	/*private void UTM latLongtoUTM(double lattitude, double longitude){
-			double UTMNorthing; 
-			double UTMEasting;
-			String Zone;
-			
-			double a = 6378137; //WGS84
-			double eccSquared = 0.00669438; //WGS84
-			double k0 = 0.9996;
-
-			double LongOrigin;
-			double eccPrimeSquared;
-			double N, T, C, A, M;
-
-			//Make sure the longitude is between -180.00 .. 179.9
-			double LongTemp = (longitude+180)-((int)((longitude+180)/360))*360-180; // -180.00 .. 179.9;
-
-			double LatRad = lattitude*deg2rad;
-			double LongRad = LongTemp*deg2rad;
-			double LongOriginRad;
-			int ZoneNumber;
-
-			ZoneNumber = ((int)((LongTemp + 180)/6)) + 1;
-
-			if( Lat >= 56.0 && Lat < 64.0 && LongTemp >= 3.0 && LongTemp < 12.0 )
-			ZoneNumber = 32;
-
-			// Special zones for Svalbard
-			if( Lat >= 72.0 && Lat < 84.0 )
-			{
-			if( LongTemp >= 0.0 && LongTemp < 9.0 ) ZoneNumber = 31;
-			else if( LongTemp >= 9.0 && LongTemp < 21.0 ) ZoneNumber = 33;
-			else if( LongTemp >= 21.0 && LongTemp < 33.0 ) ZoneNumber = 35;
-			else if( LongTemp >= 33.0 && LongTemp < 42.0 ) ZoneNumber = 37;
-			}
-			LongOrigin = (ZoneNumber - 1)*6 - 180 + 3; //+3 puts origin in middle of zone
-			LongOriginRad = LongOrigin * deg2rad;
-
-			//compute the UTM Zone from the latitude and longitude
-			Zone = ZoneNumber.ToString() + UTMLetterDesignator(Lat);
-
-			eccPrimeSquared = (eccSquared)/(1-eccSquared);
-
-			N = a/Math.Sqrt(1-eccSquared*Math.Sin(LatRad)*Math.Sin(LatRad));
-			T = Math.Tan(LatRad)*Math.Tan(LatRad);
-			C = eccPrimeSquared*Math.Cos(LatRad)*Math.Cos(LatRad);
-			A = Math.Cos(LatRad)*(LongRad-LongOriginRad);
-
-			M = a*((1 - eccSquared/4 - 3*eccSquared*eccSquared/64 - 5*eccSquared*eccSquared*eccSquared/256)*LatRad
-			- (3*eccSquared/8 + 3*eccSquared*eccSquared/32 + 45*eccSquared*eccSquared*eccSquared/1024)*Math.Sin(2*LatRad)
-			+ (15*eccSquared*eccSquared/256 + 45*eccSquared*eccSquared*eccSquared/1024)*Math.Sin(4*LatRad)
-			- (35*eccSquared*eccSquared*eccSquared/3072)*Math.Sin(6*LatRad));
-
-			UTMEasting = (double)(k0*N*(A+(1-T+C)*A*A*A/6
-			+ (5-18*T+T*T+72*C-58*eccPrimeSquared)*A*A*A*A*A/120)
-			+ 500000.0);
-
-			UTMNorthing = (double)(k0*(M+N*Math.Tan(LatRad)*(A*A/2+(5-T+9*C+4*C*C)*A*A*A*A/24
-			+ (61-58*T+T*T+600*C-330*eccPrimeSquared)*A*A*A*A*A*A/720)));
-			if(Lat < 0)
-			UTMNorthing += 10000000.0; //10000000 meter offset for southern hemisphere
+	/*public static double[] degreesToXYZ(double latitude, double longitude){
+		if (latitude == 90) return new double[]{0, 0, 6378.8};
+		if (latitude == -90) return new double[]{0, 0, -6378.8};
+		double rLat1 = latitude/57.29577951;
+		double rLon1 = longitude/57.29577951;
+		double y = RADIOUS/Math.sqrt(1 + Math.tan(rLon1)*Math.tan(rLon1) 
+				+ Math.tan(rLat1)*Math.tan(rLat1)); 
+		double x = y*Math.tan(rLon1);
+		double z = y*Math.tan(rLat1);
+		if (longitude < -90 || longitude > 90) y = -y;
+		//if (longitude < 0 || longitude > 180) x = -x;
+		//if (latitude < 0 || latitude > 90) z = -z;
+		return new double[]{x*SCALE, y*SCALE, z*SCALE};
+	}
+	
+	public static GPSFormat xyzToDegrees(double[] p){
+		double a = p[0]/SCALE;
+		double b = p[1]/SCALE;
+		double c = p[2]/SCALE;
+		if (a == 0 && b == 0 && c == 6378.8) 
+			return new SimpleFormat(0, 90, 0);
+		if (a == 0 && b == 0 && c == -6378.8) 
+			return new SimpleFormat(0, -90, 0);
+		double rLat1 = Math.atan(c/b);
+		double rLon1 = Math.atan(c/b);
+		double latitude = rLat1*57.29577951;
+		double longitude = rLon1*57.29577951;
+		return new SimpleFormat(0, latitude, longitude);
 	}*/
+	
+	public static double[] degreesToXYZ(double latitude, double longitude){
+		double rLat1 = latitude/57.29577951;
+		double rLon1 = longitude/57.29577951;
+		double x = RADIOUS*Math.cos(rLat1)*Math.cos(rLon1);
+		double y = RADIOUS*Math.cos(rLat1)*Math.sin(rLon1);
+		double z = RADIOUS*Math.sin(rLat1);
+		return new double[]{x,y,z};
+	}
+	
+	public static GPSFormat xyzToDegrees(double[] p){
+		double lat = Math.asin(p[2]/RADIOUS);
+		double lon = Math.atan2(p[1], p[0]);
+		double latitude = lat*57.29577951;
+		double longitude = lon*57.29577951;
+		return new SimpleFormat(0, latitude, longitude);
+	}
+	
 
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+		FilenameFilter filter = new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				if (name.endsWith(".txt") && name.startsWith("new")) return true;
+				return false;
+			}
+		};
+		File folder = new File("./");
+		String[] files = folder.list(filter);
+		//cojo cualquiera;
+		TreeMap<Long, GPSFormat> tree = TxtParser.parseTxtFile(new File(files[0]));
+		Trajectory t = new SimpleTrajectory(files[0], tree);
+		checkDegreesConverter(t);
+		//checkDegreesConverterSpheric(t);
+	}
 
+	public static double[] degreesToXYZ(GPSFormat p) {
+		return degreesToXYZ(p.getLatitude(), p.getLongitude());
+	}
+
+	public static void checkDegreesConverter(Trajectory t){
+		System.out.println("Original trajectory lenght = "+t.spatialLength(new GPSDistance()));
+		Trajectory tmp = new SimpleTrajectory("asd");
+		for (GPSFormat p : t.points()) {
+			double[] coord = Converter.degreesToXYZ(p);
+			GPSFormat newP = Converter.xyzToDegrees(coord);
+			newP.setTime(p.getTime());
+			tmp.addPoint(newP);
+		}
+		System.out.println("Converted trajectory lenght = "+tmp.spatialLength(new GPSDistance()));
+	}
+	/*public static void checkDegreesConverterSpheric(Trajectory t){
+		System.out.println("Original trajectory lenght = "+t.spatialLength(new GPSDistance()));
+		Trajectory tmp = new SimpleTrajectory("asd");
+		for (GPSFormat p : t.points()) {
+			double[] coord = Converter.degreesToXYZEspheric(p.getLatitude(), p.getLongitude());
+			GPSFormat newP = Converter.xyzToDegreesEspheric(coord);
+			newP.setTime(p.getTime());
+			tmp.addPoint(newP);
+		}
+		System.out.println("Spheric Converted trajectory lenght = "+tmp.spatialLength(new GPSDistance()));
+	}*/
 }

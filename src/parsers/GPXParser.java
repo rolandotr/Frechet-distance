@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -17,6 +19,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import exceptions.InconsistencyTimeException;
 
 import wrappers.GPSFormat;
 import wrappers.GPXFormat;
@@ -94,6 +97,47 @@ public class GPXParser {
 			}
 		}
 		
-		
+		public static void buildGpxFileWithUnixEpochTime(TreeMap<Long, GPSFormat> tree,
+				String fileName, int number) throws IOException {
+			File f = new File(fileName);
+			BufferedWriter writer = new BufferedWriter(new FileWriter(f, false));
+			writer.write("<?xml version=\"1.0\" standalone=\"yes\"?>");
+			writer.newLine();
+			writer.write("<gpx version=\"1.0\" creator=\"BeeLineGPS - http://www.VisualGPS.net\">");
+			writer.newLine();
+			writer.write("<trk>");
+			writer.newLine();
+			writer.write("<name>BeeLineGPS Track</name>");
+			writer.newLine();
+			writer.write("<trkseg>");
+			writer.newLine();
+			writer.write("<number>"+number+"</number>");
+			writer.newLine();
+			for (GPSFormat value : tree.values()){
+				writeWithUnixEpochTime(value, writer);
+			}
+			writer.write("</trkseg>");
+			writer.newLine();
+			writer.write("</trk>");
+			writer.newLine();
+			writer.write("</gpx>");
+			writer.close();
+		}
+
+		private static void writeWithUnixEpochTime(GPSFormat value, BufferedWriter writer) throws IOException {
+			writer.write("<trkpt lat=\""+value.getLatitude()+"\" lon=\""+value.getLongitude()+"\">");
+			writer.newLine();
+			writer.write("<ele>"+value.getHeight()+"</ele>");
+			writer.newLine();
+			//System.out.println(value.getDate());
+			SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
+			//System.out.println(s.format(value.getDate()));
+			writer.write("<time>"+s.format(value.getTime()*1000)+"</time>");
+			writer.newLine();
+			writer.write("<sym>Dot</sym>");
+			writer.newLine();
+			writer.write("</trkpt>");
+			writer.newLine();
+		}
 
 }

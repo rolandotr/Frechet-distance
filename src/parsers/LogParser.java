@@ -6,7 +6,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +17,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import exceptions.InconsistencyTimeException;
 import exceptions.IncorrectLineFormatException;
 
 
@@ -65,7 +69,16 @@ public class LogParser {
 		return result;		
 	}
 	
-
+	public static void main(String[] args) throws ParseException, IOException {
+		//parseLogLine("Y 28-07-09 00:04:40 11628.358071 E 3955.628378 N 72.5 3.3336 335.1 06");
+		//parseLogFile("./2007-04-22-GPS.log");
+		//parseLogFiles("D:\\Trabajo\\trayectories\\data\\GeoLife GPS Trajectories\\0001\\trajectory");
+		String m = "2009-07-28T15:03:21Z";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy kk:mm:ss");
+		m = m.replace("T", " ");
+		m = m.replace("Z", " ");
+		Date date = dateFormat.parse(m);
+	}
 
 	private static void parseLogFile(String fileName, TreeMap<Long, GPSFormat> tree) throws IOException{
 		BufferedReader read = new BufferedReader(new FileReader(fileName));

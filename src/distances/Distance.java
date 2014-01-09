@@ -5,8 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import trajectory.Trajectory;
+
+import clustering.Cluster.PointInsideTrajectory;
+
+import util.CartesianCoordinates;
+import util.Converter;
 import wrappers.GPSFormat;
+import wrappers.GeneralizedPoint;
+import wrappers.Trajectory;
 
 public abstract class Distance {
 
@@ -16,6 +22,19 @@ public abstract class Distance {
 
 	public abstract double distance(GPSFormat p1, GPSFormat p2);
 
+	/** 17/08/2010 Trujillo Comment
+	 * Computa para cada punto la distancia entre ellos y entonces devuelve el promedio*/
+	public double intraClusterAverageDistance(
+			List<PointInsideTrajectory> cluster) {
+		double distance = 0;
+		for (PointInsideTrajectory p1 : cluster){
+			for (PointInsideTrajectory p2 : cluster){
+				distance+= distance(p1.p, p2.p);
+			}
+		}
+		return distance/(cluster.size()*2);
+	}
+	
 	public double intraTrajectoryClusterAverageDistance(
 			List<Trajectory> cluster) {
 		double distance = 0;
@@ -79,8 +98,15 @@ public abstract class Distance {
 			distance += distance(l1.get(i), l2.get(i));
 			cont++;
 		}
-		if (cont == 0) return Double.MAX_VALUE;
+		if (cont == 0) {
+			throw new RuntimeException("trajectory t1 size = "+t1.size()
+					+", trajectory t2 size = "+t2.size()+" how it is that possible");
+		}
 		return distance/cont;		
+	}
+
+	public double distance(double[] p1, GPSFormat p2) {
+		return distance(Converter.xyzToDegrees(p1), p2);
 	}
 
 

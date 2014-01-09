@@ -11,10 +11,6 @@ import exceptions.IncorrectLineFormatException;
 
 public class PltFormat extends GPSFormat{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6377839403406736638L;
 	private boolean discontinuity;
 
 	public PltFormat() {

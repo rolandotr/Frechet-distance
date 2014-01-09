@@ -3,13 +3,14 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import trajectory.Trajectory;
 import wrappers.Rectangle;
+import wrappers.Trajectory;
 
 import javax.swing.JOptionPane;
 
-import distances.FretcherDistance;
-import distances.FretcherDistance.Cell;
+import distances.FrechetDistance;
+import distances.FrechetDistanceEuclideanBased;
+import distances.Cell;
 
 
 
@@ -25,8 +26,7 @@ public class ReachableFreeSpacePanel extends FreeSpacePanel{
 	public ReachableFreeSpacePanel() {
 	}
 
-	public void computeFreeSpace(Cell[][] freeSpace){
-		FretcherDistance distance = new FretcherDistance(0);
+	public void computeFreeSpace(Cell[][] freeSpace, FrechetDistance distance){
 		super.freeSpace = distance.computeCellOfReachableFreeSpace(freeSpace);
 		trajectories = null;
 		repaint();
@@ -34,20 +34,19 @@ public class ReachableFreeSpacePanel extends FreeSpacePanel{
 
 	@Override
 	public void computeFreeSpace(Trajectory t1, Trajectory t2, double epsilon) {
-		FretcherDistance distance = new FretcherDistance(epsilon);
-		Cell[][] freeSpace = distance.computeCellOfFreeSpace(t1, t2);
+		FrechetDistanceEuclideanBased distance = new FrechetDistanceEuclideanBased();
+		Cell[][] freeSpace = distance.computeCellOfFreeSpace(t1, t2, epsilon);
 		super.freeSpace = distance.computeCellOfReachableFreeSpace(freeSpace);
 		trajectories = null;
 		repaint();
 	}
 
-	public double[][] computeMonotoneCurve() {
+	public double[][] computeMonotoneCurve(FrechetDistance distance) {
 		if (freeSpace == null){
 			JOptionPane.showConfirmDialog(this, "The free space must be computed first");
 			return null;
 		}
-		FretcherDistance distance = new FretcherDistance(0);
-		trajectories = distance.computeMonotoneCurves(freeSpace);
+		trajectories = distance.computeMonotoneCurves(freeSpace);		
 		repaint();
 		return trajectories;
 	}

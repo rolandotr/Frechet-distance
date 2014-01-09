@@ -11,11 +11,6 @@ import exceptions.IncorrectLineFormatException;
 
 public class LogFormat extends GPSFormat{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4341819522811133229L;
-
 	private CardinalPoint longitudeCardinalPoint;
 	
 	private CardinalPoint latitudeCardinalPoint;

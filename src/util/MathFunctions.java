@@ -37,5 +37,29 @@ public class MathFunctions {
 	}
 
 
+	public static double maximum(double[][] values){
+		double max = values[0][0];
+		for (int i = 0; i < values.length; i++) {
+			for (int j = 0; j < values.length; j++) {
+				if (max < values[i][j]) max =values[i][j]; 
+			}
+		}
+		return max;
+	}
+	public static double minimum(double[][] values){
+		double min = values[0][0];
+		for (int i = 0; i < values.length; i++) {
+			for (int j = 0; j < values.length; j++) {
+				if (min > values[i][j]) min =values[i][j]; 
+			}
+		}
+		return min;
+	}
+
+	public static int getPercetange(double min, double max, double value) {
+		if (max < value || min > value) throw new RuntimeException();
+		return (int)(100*(value-min)/(max-min));
+	}
+	
 
 }
