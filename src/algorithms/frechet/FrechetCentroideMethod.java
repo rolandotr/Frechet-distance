@@ -16,7 +16,6 @@ public class FrechetCentroideMethod extends FrechetBasedAnonymization{
 
 	public FrechetCentroideMethod(String preffix, FrechetDistance distance) {
 		super(preffix, distance);
-		super.name = "FC";
 	}
 
 	/*Trujillo- May 15, 2013
@@ -70,6 +69,11 @@ public class FrechetCentroideMethod extends FrechetBasedAnonymization{
 	
 	@Override
 	public String toString() {
+		return getName();
+	}
+
+	@Override
+	public String getName() {
 		return "frechet-centroide";
 	}
 

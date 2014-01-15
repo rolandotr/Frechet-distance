@@ -41,5 +41,9 @@ public class MyDistanceEuclideanBased extends MyDynamicDistance{
 		return distance.distance(p1, p2);
 	}
 	
+	@Override
+	public String getName() {
+		return "my_dynamic_euclidean_based_distance";
+	}
 
 }

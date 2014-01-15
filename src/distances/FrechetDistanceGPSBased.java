@@ -209,5 +209,11 @@ public class FrechetDistanceGPSBased extends FrechetDistance{
 			}			
 		}
 	}
+	
+	@Override
+	public String getName() {
+		return "frechet_distance_based";
+	}
+
 
 }

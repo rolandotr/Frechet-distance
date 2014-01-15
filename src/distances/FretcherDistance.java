@@ -317,4 +317,10 @@ public class FretcherDistance extends Distance{
 		return result;
 	}
 	
+	@Override
+	public String getName() {
+		return "frechet_distance";
+	}
+
+	
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import clustering.Cluster;
 import clustering.Cluster.PointInsideTrajectory;
 
-import algorithms.AnonymizationMethod;
+import algorithms.DistanceBasedAnonymizationMethod;
 
 import distances.EuclideanDistance;
 import distances.GPSDistance;
@@ -24,13 +24,12 @@ import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
-public abstract class MyAnonymization extends AnonymizationMethod{
+public abstract class MyAnonymization extends DistanceBasedAnonymizationMethod{
 
 	protected MyDynamicDistance distance;
 	
 	public MyAnonymization(String preffix, MyDynamicDistance distance) {
-		super(preffix, "myone");
-		this.distance = distance;
+		super(preffix+"myone/", distance);
 	}
 	
 	@Override

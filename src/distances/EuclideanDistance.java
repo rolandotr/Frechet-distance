@@ -27,5 +27,10 @@ public class EuclideanDistance extends Distance{
 		return Math.sqrt(Math.pow(p1.getLatitude()-p2.getLatitude(), 2)+Math.pow(p1.getLongitude()-p2.getLongitude(), 2));
 	}
 
+	@Override
+	public String getName() {
+		return "euclidean_distance";
+	}
+
 }
 

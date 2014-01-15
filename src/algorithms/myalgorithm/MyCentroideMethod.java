@@ -19,7 +19,6 @@ public class MyCentroideMethod extends MyAnonymization{
 
 	public MyCentroideMethod(String preffix, MyDynamicDistance distance) {
 		super(preffix, distance);
-		super.name = "MC";
 	}
 
 	@Override
@@ -67,6 +66,11 @@ public class MyCentroideMethod extends MyAnonymization{
 	
 	@Override
 	public String toString() {
+		return getName();
+	}
+
+	@Override
+	public String getName() {
 		return "my-centroide";
 	}
 

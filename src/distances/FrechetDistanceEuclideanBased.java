@@ -174,4 +174,9 @@ public class FrechetDistanceEuclideanBased extends FrechetDistance{
 		return new double[]{result1, result2};
 	}
 
+	@Override
+	public String getName() {
+		return "frechet_euclidean_based";
+	}
+
 }

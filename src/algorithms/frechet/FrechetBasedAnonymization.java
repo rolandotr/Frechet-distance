@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import algorithms.AnonymizationMethod;
+import algorithms.DistanceBasedAnonymizationMethod;
 
 import distances.FrechetDistance;
 import distances.FrechetDistanceEuclideanBased;
@@ -14,13 +14,10 @@ import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
-public abstract class FrechetBasedAnonymization extends AnonymizationMethod{
-
-	protected FrechetDistance distance;
+public abstract class FrechetBasedAnonymization extends DistanceBasedAnonymizationMethod{
 	
 	public FrechetBasedAnonymization(String preffix, FrechetDistance distance) {
-		super(preffix, "frechet");
-		this.distance = distance;
+		super(preffix+"frechet/", distance);
 	}
 	
 	@Override
@@ -30,7 +27,7 @@ public abstract class FrechetBasedAnonymization extends AnonymizationMethod{
 		List<Transformation> tmp;
 		List<Trajectory> tmp2;
 		while (trajectories.size() >= k) {
-			tmp = getTransformation(trajectories, k, distance);
+			tmp = getTransformation(trajectories, k, (FrechetDistance)distance);
 			if (tmp == null) continue;
 			tmp2 = new LinkedList<Trajectory>();
 			tmp2.add(tmp.get(0).t1);
@@ -135,7 +132,7 @@ public abstract class FrechetBasedAnonymization extends AnonymizationMethod{
 			}
 			else{
 				tmp = t;
-				Transformation transformation = distance.distanceWithTransformationOptimized(pivot, tmp);
+				Transformation transformation = ((FrechetDistance)distance).distanceWithTransformationOptimized(pivot, tmp);
 				//System.out.println("Frechet distance between "+pivot+" and "+tmp+" could not be computed");
 				result.add(transformation);
 			}

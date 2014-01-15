@@ -177,5 +177,10 @@ public class LogCostDistance extends Distance{
 		}
 	}
 	
+	@Override
+	public String getName() {
+		return "log_cost_distance";
+	}
+
 
 }

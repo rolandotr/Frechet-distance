@@ -9,7 +9,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
-import algorithms.AnonymizationMethod;
+import algorithms.DistanceBasedAnonymizationMethod;
 
 import distances.Distance;
 import distances.FrechetDistance;
@@ -24,13 +24,10 @@ import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
-public abstract class GeneralizationAnonymization extends AnonymizationMethod{
-
-	protected LogCostDistance distance;
+public abstract class GeneralizationAnonymization extends DistanceBasedAnonymizationMethod{
 	
 	public GeneralizationAnonymization(String preffix, LogCostDistance distance) {
-		super(preffix, "generalization");
-		this.distance = distance;
+		super(preffix+"generalization/", distance);
 	}
 	
 	@Override
@@ -80,7 +77,7 @@ System.out.println("Avg Euclidean distance is "+util.Distance.intraClusterAverag
 		double min = Double.MAX_VALUE;
 		Trajectory minTrajectory = null;
 		for (Trajectory trajectory : trajectories) {
-			Transformation cost = distance.logCostDistance(LogCostDistance.generalizeAtomicTrajectory(trajectory), 
+			Transformation cost = ((LogCostDistance)distance).logCostDistance(LogCostDistance.generalizeAtomicTrajectory(trajectory), 
 					representative); 
 			if (cost.cost < min){
 				min = cost.cost;
@@ -96,7 +93,7 @@ System.out.println("Avg Euclidean distance is "+util.Distance.intraClusterAverag
 	 */
 	private GeneralizedTrajectory anonymize(GeneralizedTrajectory t1, 
 			GeneralizedTrajectory t2) {
-		Transformation transf = distance.logCostDistance(t1, t2);
+		Transformation transf = ((LogCostDistance)distance).logCostDistance(t1, t2);
 		GeneralizedTrajectory result = new GeneralizedTrajectory(t1.getIdentifier()+"-"+
 				t2.getIdentifier());
 		GeneralizedPoint p1;

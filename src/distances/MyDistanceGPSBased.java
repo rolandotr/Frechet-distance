@@ -52,6 +52,11 @@ public class MyDistanceGPSBased extends MyDynamicDistance{
 			public double distance(Point p1, Point p2) {
 				throw new RuntimeException();
 			}
+			
+			@Override
+			public String getName() {
+				return "my_recursive_distance";
+			}
 		};
 		
 		MyRecursiveDistance.Transformation tran = null;		
@@ -108,5 +113,9 @@ public class MyDistanceGPSBased extends MyDynamicDistance{
 		return distance.distance(p1, p2);
 	}
 	
+	@Override
+	public String getName() {
+		return "my_dynamic_gps_based_distance";
+	}
 
 }

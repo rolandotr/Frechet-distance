@@ -46,6 +46,11 @@ public abstract class MyDynamicDistance extends Distance{
 			public double distance(Point p1, Point p2) {
 				throw new RuntimeException();
 			}
+
+			@Override
+			public String getName() {
+				return "temporal_dynamic_distance";
+			}
 		};
 		
 		Transformation t = distance.getTransformation(t1, t2);

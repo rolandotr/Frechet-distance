@@ -19,7 +19,6 @@ public class GeneralizationCentroideMethod extends GeneralizationAnonymization{
 
 	public GeneralizationCentroideMethod(String preffix, LogCostDistance distance) {
 		super(preffix, distance);
-		super.name = "GC";
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class GeneralizationCentroideMethod extends GeneralizationAnonymization{
 	 */
 	private GeneralizedTrajectory anonymize(GeneralizedTrajectory t1, 
 			GeneralizedTrajectory t2) {
-		Transformation transf = distance.logCostDistance(t1, t2);
+		Transformation transf = ((LogCostDistance)distance).logCostDistance(t1, t2);
 		GeneralizedTrajectory result = new GeneralizedTrajectory(t1.getIdentifier()+"-"+
 				t2.getIdentifier());
 		GeneralizedPoint p1;
@@ -100,7 +99,7 @@ public class GeneralizationCentroideMethod extends GeneralizationAnonymization{
 		for (Trajectory t1 : cluster) {
 			double totalCost = 0;
 			for (Trajectory t2 : cluster) {
-				trans = distance.logCostDistance(t1,t2);
+				trans = ((LogCostDistance)distance).logCostDistance(t1,t2);
 				totalCost += trans.cost;
 			}
 			if (totalCost < min){
@@ -113,6 +112,11 @@ public class GeneralizationCentroideMethod extends GeneralizationAnonymization{
 	
 	@Override
 	public String toString() {
+		return getName();
+	}
+
+	@Override
+	public String getName() {
 		return "generalization-centroide";
 	}
 

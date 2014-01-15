@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
-import algorithms.AnonymizationMethod;
+import algorithms.DistanceBasedAnonymizationMethod;
 
 import distances.Distance;
 import distances.FrechetDistance;
@@ -17,13 +17,12 @@ import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
-public abstract class JosepAnonymization extends AnonymizationMethod{
+public abstract class JosepAnonymization extends DistanceBasedAnonymizationMethod{
 
 	protected Distance distance;
 	
 	public JosepAnonymization(String preffix, Distance distance) {
-		super(preffix, "josep");
-		this.distance = distance;
+		super(preffix+"josep/", distance);
 	}
 	
 	@Override
