@@ -12,8 +12,9 @@ import distances.FrechetDistance;
 import distances.FrechetDistanceEuclideanBased;
 import distances.Transformation;
 
+import trajectory.Trajectory;
+import trajectory.TrajectoryDataset;
 import util.Timer;
-import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
@@ -30,8 +31,8 @@ public abstract class JosepAnonymization extends DistanceBasedAnonymizationMetho
 		//loadTrajectories();
 		List<List<Trajectory>> result = new LinkedList<List<Trajectory>>();
 		while (trajectories.size() >= k){
-			Trajectory centroide = findCentroide(trajectories);
-			Trajectory pivote = findCloserTrajectoryFrom(centroide, trajectories, distance);
+			Trajectory centroide = TrajectoryDataset.findCentroide(trajectories);
+			Trajectory pivote = TrajectoryDataset.findCloserTrajectoryFrom(centroide, trajectories, distance);
 			Hashtable<Trajectory, Double> partialResult = new Hashtable<Trajectory, Double>();
 			double worstDistance = -1;
 			Trajectory toRemove = null;			

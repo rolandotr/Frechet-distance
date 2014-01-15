@@ -17,9 +17,9 @@ import distances.EuclideanDistance;
 import distances.GPSDistance;
 
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 
 public class Statistics {

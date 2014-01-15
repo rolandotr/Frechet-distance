@@ -9,11 +9,11 @@ import java.util.List;
 import algorithms.generalization.GeneralizedTrajectory;
 
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 
 /*Trujillo- May 30, 2013

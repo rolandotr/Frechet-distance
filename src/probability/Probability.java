@@ -13,10 +13,10 @@ import java.util.List;
 
 import clustering.MyTrajectoryFormat;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import util.MathFunctions;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 public class Probability {
 

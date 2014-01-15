@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-import wrappers.Trajectory;
+import trajectory.Trajectory;
 
 public abstract class MyTrajectoryFormat{
 

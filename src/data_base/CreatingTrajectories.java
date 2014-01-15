@@ -16,9 +16,9 @@ import java.util.TreeMap;
 import clustering.MyTrajectoryFormat;
 import distances.GPSDistance;
 
+import trajectory.Trajectory;
 import util.Util;
 import wrappers.GPSFormat;
-import wrappers.Trajectory;
 
 public class CreatingTrajectories {
 

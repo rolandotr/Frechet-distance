@@ -3,8 +3,12 @@ package trajectory;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.TreeMap;
 
-import wrappers.Trajectory;
+import wrappers.GPSFormat;
+import wrappers.SimpleFormat;
+import distances.Distance;
+
 
 
 /*Trujillo- Jan 15, 2014
@@ -48,6 +52,49 @@ public class TrajectoryDataset {
 		Random random = new Random();
 		return trajectories.get(random.nextInt(trajectories.size()));
 	}
+	public static Trajectory findCloserTrajectoryFrom(Trajectory trajectory, List<Trajectory> trajectories, Distance distance){
+		double min = Double.MAX_VALUE;
+		double tmp;
+		Trajectory result = null;
+		for (Trajectory record : trajectories){
+			tmp = distance.distance(trajectory,record);
+			if (tmp < min){
+				min = tmp;
+				result = record;
+			}
+		}
+		return result;
+	}
+	
+	public static Trajectory findCentroide(List<Trajectory> trajectories){
+		Trajectory centroide = new SimpleTrajectory("temp");
+		TreeMap<Long, Integer> counter = new TreeMap<Long, Integer>();
+		GPSFormat tmp;
+		GPSFormat tmpC;
+		for (Trajectory t : trajectories){
+			for (long time : t.times()){
+				tmp = t.getPoint(time);
+				if (centroide.containsTime(time)){
+					tmpC = centroide.getPoint(time);
+					centroide.addPoint(new SimpleFormat(time, tmp.getLatitude()+tmpC.getLatitude(), 
+							tmp.getLongitude()+tmp.getLongitude()));
+					counter.put(time, counter.get(time)+1);
+				}
+				else{
+					centroide.addPoint(tmp);
+					counter.put(time, 1);
+				}
+			}
+		}
+		Trajectory result = new SimpleTrajectory("centroide");
+		for (long time : centroide.times()){
+			result.addPoint(new SimpleFormat(time, 
+					centroide.getPoint(time).getLatitude()/counter.get(time), 
+					centroide.getPoint(time).getLongitude()/counter.get(time)));
+		}
+		return result;
+	}
+	
 
 
 }

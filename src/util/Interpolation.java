@@ -1,8 +1,8 @@
 package util;
 
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
-import wrappers.Trajectory;
 
 public class Interpolation {
 

@@ -10,7 +10,8 @@ import distances.FrechetDistance;
 import distances.FrechetDistanceEuclideanBased;
 import distances.Transformation;
 
-import wrappers.Trajectory;
+import trajectory.Trajectory;
+import trajectory.TrajectoryDataset;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
@@ -61,7 +62,7 @@ public abstract class FrechetBasedAnonymization extends DistanceBasedAnonymizati
 	protected List<Transformation> getTransformation(
 			List<Trajectory> trajectories, int k, FrechetDistance distance) {
 		if (trajectories.size() < k) return null;
-		Trajectory pivot = getRandomPivotTrajectory(trajectories);		
+		Trajectory pivot = TrajectoryDataset.getRandomPivotTrajectory(trajectories);		
 		List<Transformation> result = new ArrayList<Transformation>();
 		double worstDistance = 0;
 		Transformation transformation;

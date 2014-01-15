@@ -1,6 +1,6 @@
 package distances;
 
-import wrappers.Trajectory;
+import trajectory.Trajectory;
 
 public class Transformation{
 	

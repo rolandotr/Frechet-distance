@@ -2,8 +2,8 @@ package distances;
 
 import java.awt.Point;
 
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
-import wrappers.Trajectory;
 
 public class EuclideanDistance extends Distance{
 

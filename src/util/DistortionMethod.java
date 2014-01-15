@@ -9,10 +9,10 @@ import clustering.Cluster.PointInsideTrajectory;
 import distances.Distance;
 import distances.GraphDistance;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 
 /** 21/09/2010 Trujillo Comment

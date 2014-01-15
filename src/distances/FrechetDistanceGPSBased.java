@@ -13,14 +13,14 @@ import java.util.TreeMap;
 import clustering.MyTrajectoryFormat;
 
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import util.Converter;
 import util.Geometry;
 import distances.Distance;
 import distances.EuclideanDistance;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 public class FrechetDistanceGPSBased extends FrechetDistance{
 

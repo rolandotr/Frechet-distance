@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Hashtable;
 
-import wrappers.Trajectory;
+import trajectory.Trajectory;
 
 import distances.Distance;
 

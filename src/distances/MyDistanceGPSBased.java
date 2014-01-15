@@ -13,13 +13,13 @@ import distances.MyDynamicDistance.Transformation;
 import algorithms.generalization.GeneralizedTrajectory;
 
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import util.Syntetic;
 import util.Util;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 
 public class MyDistanceGPSBased extends MyDynamicDistance{

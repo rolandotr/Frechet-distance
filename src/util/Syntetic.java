@@ -43,10 +43,10 @@ import distances.LogCostDistance;
 import distances.MyDistanceEuclideanBased;
 import distances.MyDistanceGPSBased;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 public class Syntetic {
 

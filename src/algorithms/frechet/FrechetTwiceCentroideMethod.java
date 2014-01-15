@@ -8,13 +8,14 @@ import java.util.List;
 
 import parsers.GPXParser;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
+import trajectory.TrajectoryDataset;
 import util.Converter;
 import util.Interpolation;
 import util.Util;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 import distances.FrechetDistance;
 import distances.FrechetDistanceGPSBased;
 import distances.Transformation;
@@ -67,7 +68,7 @@ public class FrechetTwiceCentroideMethod extends FrechetCentroideMethod{
 	protected List<Transformation> getTransformation(
 			List<Trajectory> trajectories, int k, FrechetDistance distance) {
 		if (trajectories.size() < k) return null;
-		Trajectory pivot = getRandomPivotTrajectory(trajectories);		
+		Trajectory pivot = TrajectoryDataset.getRandomPivotTrajectory(trajectories);		
 		List<Transformation> result = new ArrayList<Transformation>();
 		double worstDistance = 0;
 		Transformation transformation1;

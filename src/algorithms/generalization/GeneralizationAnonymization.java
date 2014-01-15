@@ -18,9 +18,10 @@ import distances.GPSDistance;
 import distances.LogCostDistance;
 import distances.LogCostDistance.Transformation;
 
+import trajectory.Trajectory;
+import trajectory.TrajectoryDataset;
 import util.Timer;
 import wrappers.GeneralizedPoint;
-import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
@@ -44,7 +45,7 @@ public abstract class GeneralizationAnonymization extends DistanceBasedAnonymiza
 	protected List<Trajectory> getCluster(int k, List<Trajectory> trajectories){
 		if (trajectories.size() < k) return null;
 		List<Trajectory> result = new LinkedList<Trajectory>();
-		Trajectory tmp = getRandomPivotTrajectory(trajectories);
+		Trajectory tmp = TrajectoryDataset.getRandomPivotTrajectory(trajectories);
 		result.add(tmp);
 		trajectories.remove(tmp);
 		GeneralizedTrajectory representative = LogCostDistance.generalizeAtomicTrajectory(tmp);

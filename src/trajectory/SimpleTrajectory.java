@@ -1,5 +1,6 @@
 package trajectory;
 
+import java.awt.Point;
 import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -9,6 +10,7 @@ import util.Interpolation;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
 
+import distances.Distance;
 
 
 public class SimpleTrajectory extends Trajectory{
@@ -107,17 +109,17 @@ public class SimpleTrajectory extends Trajectory{
 	}
 
 	@Override
-	public long closestTimeGreater(long time) {
-		if (trajectory.containsKey(time)) throw new RuntimeException();
-		Entry<Long, GPSFormat> entry = trajectory.ceilingEntry(time);
-		return entry.getKey()-time;
+	public long closestTimeGreater(double time) {
+		//if (trajectory.containsKey(time)) throw new RuntimeException();
+		Entry<Long, GPSFormat> entry = trajectory.ceilingEntry((long)Math.ceil(time));
+		return entry.getKey()-(long)Math.ceil(time);
 	}
 
 	@Override
-	public long closestTimeLower(long time) {
-		if (trajectory.containsKey(time)) throw new RuntimeException();
-		Entry<Long, GPSFormat> entry = trajectory.floorEntry(time);
-		return time-entry.getKey();
+	public long closestTimeLower(double time) {
+		//if (trajectory.containsKey(time)) throw new RuntimeException();
+		Entry<Long, GPSFormat> entry = trajectory.floorEntry((long)Math.floor(time));
+		return (long)Math.floor(time)-entry.getKey();
 	}
 	
 	@Override
@@ -167,21 +169,29 @@ public class SimpleTrajectory extends Trajectory{
 	}
 
 	@Override
-	public boolean timeOutOfInterval(long time) {
+	public boolean timeOutOfInterval(double time) {
+		if (size() < 2) return true;
 		return (time < firstTime() || time > lastTime());
 	}
 
 	@Override
-	public GPSFormat interpolateTime(long time) {
-		if (timeOutOfInterval(time)) throw new RuntimeException();
-		if (containsTime(time)) throw new RuntimeException();
-		long timeLower = time - closestTimeLower(time);
-		long timeGreater = time + closestTimeGreater(time);
-		return Interpolation.interpolate(getPoint(timeLower), getPoint(timeGreater), time);
+	public GPSFormat interpolateTime(double time) {
+		if (timeOutOfInterval(time)) 
+			throw new RuntimeException("requested time = "+time+", but interval should be" +
+					"["+firstTime()+","+lastTime()+"]");
+		//if (containsTime(time)) throw new RuntimeException();
+		long timeLower = (long)Math.floor(time) - closestTimeLower(time);
+		long timeGreater = (long)Math.ceil(time) + closestTimeGreater(time);
+		return Interpolation.interpolate(getPoint(timeLower), getPoint(timeGreater), (long)time);
 	}
 
 	public TreeMap<Long, GPSFormat> getTree() {
 		return trajectory;
+	}
+
+	@Override
+	public Long ceilingTime(long time) {
+		return trajectory.ceilingKey(time);
 	}
 
 

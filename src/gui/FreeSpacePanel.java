@@ -7,8 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.Area;
 
+import trajectory.Trajectory;
 import wrappers.Rectangle;
-import wrappers.Trajectory;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;

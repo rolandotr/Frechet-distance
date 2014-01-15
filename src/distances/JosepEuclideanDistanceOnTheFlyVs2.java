@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 
+import trajectory.Trajectory;
 import util.Interpolation;
 import util.Vertex;
 import wrappers.GPSFormat;
-import wrappers.Trajectory;
 
 public class JosepEuclideanDistanceOnTheFlyVs2 extends EuclideanDistance{
 

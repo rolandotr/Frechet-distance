@@ -13,10 +13,10 @@ import parsers.GPXParser;
 import parsers.TxtParser;
 
 import distances.GPSDistance;
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 public class Converter {
 

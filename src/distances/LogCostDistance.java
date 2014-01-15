@@ -7,9 +7,9 @@ import java.util.List;
 import algorithms.generalization.GeneralizedTrajectory;
 
 
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
-import wrappers.Trajectory;
 
 public class LogCostDistance extends Distance{
 

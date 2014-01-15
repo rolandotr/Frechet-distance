@@ -15,10 +15,10 @@ import compression.BasicCompression;
 
 import distances.GPSDistance;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 public class Util {
 	

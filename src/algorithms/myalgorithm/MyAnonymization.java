@@ -14,13 +14,14 @@ import distances.GPSDistance;
 import distances.MyDynamicDistance;
 import distances.MyDynamicDistance.Transformation;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
+import trajectory.TrajectoryDataset;
 import util.Distance;
 import util.Print;
 import util.Statistics;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
@@ -46,7 +47,7 @@ public abstract class MyAnonymization extends DistanceBasedAnonymizationMethod{
 	protected List<Trajectory> getCluster(int k, List<Trajectory> trajectories){
 		if (trajectories.size() < k) return null;
 		List<Trajectory> result = new LinkedList<Trajectory>();
-		Trajectory tmp = getRandomPivotTrajectory(trajectories);
+		Trajectory tmp = TrajectoryDataset.getRandomPivotTrajectory(trajectories);
 		result.add(tmp);
 		trajectories.remove(tmp);
 		Trajectory representative = tmp;

@@ -19,6 +19,8 @@ import range_queries.DAIQuery;
 import range_queries.PSIQuery;
 import range_queries.Query;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import util.GnuPlot;
 import util.Latex;
 import util.Print;
@@ -26,8 +28,6 @@ import util.Statistics;
 import util.Timer;
 import util.Util;
 import wrappers.GPSFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 import algorithms.DistanceBasedAnonymizationMethod;
 import algorithms.frechet.FrechetCentroideMethod;
 import algorithms.frechet.FrechetTwiceCentroideMethod;

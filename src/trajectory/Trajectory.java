@@ -1,16 +1,22 @@
 package trajectory;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 
 import wrappers.GPSFormat;
 
 
+import clustering.Cluster.PointInsideTrajectory;
+import clustering.Measurable;
 import distances.Distance;
 
-public abstract class Trajectory implements Serializable, Cloneable{
+public abstract class Trajectory implements Measurable<Trajectory>, Serializable, Cloneable{
 
 	
 	/**
@@ -22,6 +28,9 @@ public abstract class Trajectory implements Serializable, Cloneable{
 	 * Por cuestion de performance de este modo es que se va a definir la igualdad entre
 	 * trajectorias*/
 	private String identifier;
+	
+	private Trajectory(){
+	}
 	
 	public Trajectory(String identifier){
 		this.identifier = identifier;
@@ -68,19 +77,6 @@ public abstract class Trajectory implements Serializable, Cloneable{
 		return distance;
 	}
 
-	public double getEuclideanLenth(Distance dist) {
-		GPSFormat first = null;
-		double size = 0;
-		for (GPSFormat p : this.points()){
-			if (first == null) first = p;
-			else{
-				size += dist.distance(p, first); 
-			}
-			first = p;
-		}
-		return size;
-	}
-
 	public abstract Collection<GPSFormat> points();
 
 	public abstract void setPoint(long time, double x, double y);
@@ -115,20 +111,20 @@ public abstract class Trajectory implements Serializable, Cloneable{
 	public abstract long lastTime();
 	public abstract long firstTime();
 
-	public long closestTime(long time){
+	public long closestTime(double time){
 		long lower = closestTimeLower(time);
 		long greater = closestTimeGreater(time);
-		if (lower < greater) return time-lower;
-		else return time+greater;
+		if (lower < greater) return (long)Math.floor(time)-lower;
+		else return (long)Math.ceil(time)+greater;
 	}
 	
 	public abstract long closestTimeNotUsed(long time);
 
 	/** 11/01/2012 Trujillo Comment
 	 * Siempre deben retornar numero positivos indicando cuanto hay que desplazarse*/
-	public abstract long closestTimeGreater(long time);
+	public abstract long closestTimeGreater(double time);
 	
-	public abstract long closestTimeLower(long time);
+	public abstract long closestTimeLower(double time);
 
 	public abstract void addPoint(GPSFormat p, long min);
 	
@@ -137,9 +133,9 @@ public abstract class Trajectory implements Serializable, Cloneable{
 		return getIdentifier().hashCode();
 	}
 
-	public abstract boolean timeOutOfInterval(long time);
+	public abstract boolean timeOutOfInterval(double time);
 
-	public abstract GPSFormat interpolateTime(long time);
+	public abstract GPSFormat interpolateTime(double time);
 
 	/** 09/02/2012 Trujillo Comment
 	 * Retorna el menor bounding box, o sea, el rectangulo que la contiene.*/
@@ -155,6 +151,63 @@ public abstract class Trajectory implements Serializable, Cloneable{
 			if (p.getLongitude() > maxy) maxy = p.getLongitude();
 		}
 		return new Rectangle((int)minx, (int)miny, (int)(maxx-minx), (int)(maxy-miny));
+	}
+
+	public long length() {
+		return lastTime()-firstTime();
+	}
+
+	public abstract Long ceilingTime(long time);
+
+	public double spatialLength(Distance distance) {
+		double result = 0;
+		GPSFormat first = null;
+		for (GPSFormat point : points()) {
+			if (first == null) {
+				first = point;
+				continue;
+			}
+			result += distance.distance(first, point);
+			first = point;
+		}
+		return result;
+	}
+
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+
+	public GPSFormat[] toArray() {
+		GPSFormat[] result = new GPSFormat[size()];
+		values().toArray(result);
+		return result;
+	}
+
+	public abstract TreeMap<Long, GPSFormat> getTree();
+
+	public void setIdentifier(String id) {
+		identifier = id;
+	}
+
+	public Trajectory invert() {
+		Trajectory result = new SimpleTrajectory(this.getIdentifier());
+		long[] times = new long[size()];
+		GPSFormat[] points = new GPSFormat[size()];
+		int cont  = 0;
+		for (long time : times()) {
+			times[cont++] = time;
+			try {
+				points[size()-cont] = (GPSFormat)getPoint(time).clone();
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+		for (int i = 0; i < points.length; i++) {
+			points[i].setTime(times[i]);
+			result.addPoint(points[i]);
+		}
+		return result;
 	}
 	
 }

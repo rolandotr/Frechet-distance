@@ -102,7 +102,7 @@ public abstract class GPSFormat implements Serializable{
 	}
 	
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		return new SimpleFormat(getTime(), getLatitude(), getLongitude());
 	}
 }

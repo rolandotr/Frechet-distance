@@ -3,10 +3,10 @@ package algorithms.frechet;
 import java.util.ArrayList;
 import java.util.List;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import util.Interpolation;
 import wrappers.GPSFormat;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 import distances.FrechetDistance;
 import distances.Transformation;
 

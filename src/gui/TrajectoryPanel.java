@@ -7,11 +7,11 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import trajectory.SimpleTrajectory;
+import trajectory.Trajectory;
 import util.Converter;
 import util.Interpolation;
 import wrappers.Rectangle;
-import wrappers.SimpleTrajectory;
-import wrappers.Trajectory;
 
 import java.io.File;
 import java.io.IOException;

@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.util.Iterator;
 import java.util.List;
 
-import wrappers.Trajectory;
 
 
 /*Trujillo- Jan 15, 2014

@@ -7,10 +7,10 @@ import java.util.TreeMap;
 
 import clustering.Cluster.PointInsideTrajectory;
 
+import trajectory.Trajectory;
 import util.CartesianCoordinates;
 import util.Converter;
 import wrappers.GPSFormat;
-import wrappers.Trajectory;
 
 public abstract class DistanceOld {
 
