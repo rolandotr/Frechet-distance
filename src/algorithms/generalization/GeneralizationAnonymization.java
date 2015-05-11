@@ -9,7 +9,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
-import algorithms.DistanceBasedAnonymizationMethod;
+import algorithms.AnonymizationMethod;
 
 import distances.Distance;
 import distances.FrechetDistance;
@@ -18,17 +18,19 @@ import distances.GPSDistance;
 import distances.LogCostDistance;
 import distances.LogCostDistance.Transformation;
 
-import trajectory.Trajectory;
-import trajectory.TrajectoryDataset;
 import util.Timer;
 import wrappers.GeneralizedPoint;
+import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
-public abstract class GeneralizationAnonymization extends DistanceBasedAnonymizationMethod{
+public abstract class GeneralizationAnonymization extends AnonymizationMethod{
+
+	protected LogCostDistance distance;
 	
 	public GeneralizationAnonymization(String preffix, LogCostDistance distance) {
-		super(preffix+"generalization/", distance);
+		super(preffix, "generalization");
+		this.distance = distance;
 	}
 	
 	@Override
@@ -45,7 +47,7 @@ public abstract class GeneralizationAnonymization extends DistanceBasedAnonymiza
 	protected List<Trajectory> getCluster(int k, List<Trajectory> trajectories){
 		if (trajectories.size() < k) return null;
 		List<Trajectory> result = new LinkedList<Trajectory>();
-		Trajectory tmp = TrajectoryDataset.getRandomPivotTrajectory(trajectories);
+		Trajectory tmp = getRandomPivotTrajectory(trajectories);
 		result.add(tmp);
 		trajectories.remove(tmp);
 		GeneralizedTrajectory representative = LogCostDistance.generalizeAtomicTrajectory(tmp);
@@ -78,7 +80,7 @@ System.out.println("Avg Euclidean distance is "+util.Distance.intraClusterAverag
 		double min = Double.MAX_VALUE;
 		Trajectory minTrajectory = null;
 		for (Trajectory trajectory : trajectories) {
-			Transformation cost = ((LogCostDistance)distance).logCostDistance(LogCostDistance.generalizeAtomicTrajectory(trajectory), 
+			Transformation cost = distance.logCostDistance(LogCostDistance.generalizeAtomicTrajectory(trajectory), 
 					representative); 
 			if (cost.cost < min){
 				min = cost.cost;
@@ -94,7 +96,7 @@ System.out.println("Avg Euclidean distance is "+util.Distance.intraClusterAverag
 	 */
 	private GeneralizedTrajectory anonymize(GeneralizedTrajectory t1, 
 			GeneralizedTrajectory t2) {
-		Transformation transf = ((LogCostDistance)distance).logCostDistance(t1, t2);
+		Transformation transf = distance.logCostDistance(t1, t2);
 		GeneralizedTrajectory result = new GeneralizedTrajectory(t1.getIdentifier()+"-"+
 				t2.getIdentifier());
 		GeneralizedPoint p1;

@@ -16,12 +16,12 @@ import parsers.TxtParser;
 
 import distances.Distance;
 import distances.EuclideanDistance;
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import util.Geometry;
 import util.Util;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 public class BasicCompression {
 

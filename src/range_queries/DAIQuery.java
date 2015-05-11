@@ -2,8 +2,8 @@ package range_queries;
 
 import java.util.Collection;
 
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
+import wrappers.Trajectory;
 import distances.Distance;
 
 public class DAIQuery extends Query{

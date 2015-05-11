@@ -5,11 +5,11 @@ import java.util.List;
 
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 import distances.MyDynamicDistance;
 import distances.MyDynamicDistance.Transformation;
 

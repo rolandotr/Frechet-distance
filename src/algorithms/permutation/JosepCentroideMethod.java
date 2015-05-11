@@ -9,12 +9,12 @@ import java.util.Random;
 import clustering.Cluster;
 import clustering.Cluster.PointInsideTrajectory;
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import util.Anonymization;
 import util.DistortionMethod;
 import util.Interpolation;
 import wrappers.GPSFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 import distances.Distance;
 import distances.FrechetDistance;
 import distances.Transformation;

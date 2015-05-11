@@ -11,11 +11,11 @@ import java.util.Map.Entry;
 import clustering.Cluster.PointInsideTrajectory;
 import distances.EuclideanDistance;
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GPXFormat;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 public class Distance {
 

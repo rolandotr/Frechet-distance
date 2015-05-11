@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.TreeMap;
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import util.Geometry;
 import util.Util;
 import distances.Distance;
 import distances.EuclideanDistance;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 public abstract class FrechetDistance extends Distance{
 

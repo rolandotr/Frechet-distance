@@ -3,8 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import trajectory.Trajectory;
 import wrappers.Rectangle;
+import wrappers.Trajectory;
 
 import javax.swing.JOptionPane;
 

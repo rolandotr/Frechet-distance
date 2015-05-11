@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
+import wrappers.Trajectory;
 import distances.Distance;
 
 public class PSIQuery extends Query{

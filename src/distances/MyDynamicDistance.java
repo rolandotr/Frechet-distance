@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.TreeMap;
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 public abstract class MyDynamicDistance extends Distance{
 
@@ -45,11 +45,6 @@ public abstract class MyDynamicDistance extends Distance{
 			@Override
 			public double distance(Point p1, Point p2) {
 				throw new RuntimeException();
-			}
-
-			@Override
-			public String getName() {
-				return "temporal_dynamic_distance";
 			}
 		};
 		

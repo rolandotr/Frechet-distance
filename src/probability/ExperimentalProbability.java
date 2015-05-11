@@ -5,8 +5,8 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Hashtable;
 
-import trajectory.Trajectory;
 import util.MathFunctions;
+import wrappers.Trajectory;
 
 public class ExperimentalProbability implements Prob{
 

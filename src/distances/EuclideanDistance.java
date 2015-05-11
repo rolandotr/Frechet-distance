@@ -2,8 +2,8 @@ package distances;
 
 import java.awt.Point;
 
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
+import wrappers.Trajectory;
 
 public class EuclideanDistance extends Distance{
 
@@ -25,11 +25,6 @@ public class EuclideanDistance extends Distance{
 	@Override
 	public double distance(GPSFormat p1, GPSFormat p2) {
 		return Math.sqrt(Math.pow(p1.getLatitude()-p2.getLatitude(), 2)+Math.pow(p1.getLongitude()-p2.getLongitude(), 2));
-	}
-
-	@Override
-	public String getName() {
-		return "euclidean_distance";
 	}
 
 }

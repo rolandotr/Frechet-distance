@@ -1,6 +1,5 @@
 package range_queries;
 
-import trajectory.Trajectory;
 import util.*;
 import wrappers.*;
 

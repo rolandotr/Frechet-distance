@@ -19,13 +19,13 @@ import distances.FrechetDistanceEuclideanBased;
 import distances.Transformation;
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import util.Timer;
 import util.Vertex;
 import wrappers.GPSFormat;
 import wrappers.PairObject;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 public class Cluster {
 	

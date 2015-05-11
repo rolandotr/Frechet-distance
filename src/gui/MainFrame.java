@@ -32,10 +32,10 @@ import algorithms.frechet.FrechetCentroideMethod;
 import clustering.FixedUtilityCriterion;
 import clustering.MyTrajectoryFormat;
 
-import trajectory.Trajectory;
 import util.Anonymization;
 import util.Interpolation;
 import wrappers.GPSFormat;
+import wrappers.Trajectory;
 
 
 import distances.Distance;

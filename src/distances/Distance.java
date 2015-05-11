@@ -8,11 +8,11 @@ import java.util.TreeMap;
 
 import clustering.Cluster.PointInsideTrajectory;
 
-import trajectory.Trajectory;
 import util.CartesianCoordinates;
 import util.Converter;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
+import wrappers.Trajectory;
 
 public abstract class Distance {
 
@@ -21,8 +21,6 @@ public abstract class Distance {
 	public abstract double distance(double x1, double y1, double x2, double y2);
 
 	public abstract double distance(GPSFormat p1, GPSFormat p2);
-	
-	public abstract String getName();
 
 	/** 17/08/2010 Trujillo Comment
 	 * Computa para cada punto la distancia entre ellos y entonces devuelve el promedio*/

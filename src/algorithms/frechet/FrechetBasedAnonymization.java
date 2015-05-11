@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import algorithms.DistanceBasedAnonymizationMethod;
+import algorithms.AnonymizationMethod;
 
 import distances.FrechetDistance;
 import distances.FrechetDistanceEuclideanBased;
 import distances.Transformation;
 
-import trajectory.Trajectory;
-import trajectory.TrajectoryDataset;
+import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
-public abstract class FrechetBasedAnonymization extends DistanceBasedAnonymizationMethod{
+public abstract class FrechetBasedAnonymization extends AnonymizationMethod{
+
+	protected FrechetDistance distance;
 	
 	public FrechetBasedAnonymization(String preffix, FrechetDistance distance) {
-		super(preffix+"frechet/", distance);
+		super(preffix, "frechet");
+		this.distance = distance;
 	}
 	
 	@Override
@@ -28,7 +30,7 @@ public abstract class FrechetBasedAnonymization extends DistanceBasedAnonymizati
 		List<Transformation> tmp;
 		List<Trajectory> tmp2;
 		while (trajectories.size() >= k) {
-			tmp = getTransformation(trajectories, k, (FrechetDistance)distance);
+			tmp = getTransformation(trajectories, k, distance);
 			if (tmp == null) continue;
 			tmp2 = new LinkedList<Trajectory>();
 			tmp2.add(tmp.get(0).t1);
@@ -62,7 +64,7 @@ public abstract class FrechetBasedAnonymization extends DistanceBasedAnonymizati
 	protected List<Transformation> getTransformation(
 			List<Trajectory> trajectories, int k, FrechetDistance distance) {
 		if (trajectories.size() < k) return null;
-		Trajectory pivot = TrajectoryDataset.getRandomPivotTrajectory(trajectories);		
+		Trajectory pivot = getRandomPivotTrajectory(trajectories);		
 		List<Transformation> result = new ArrayList<Transformation>();
 		double worstDistance = 0;
 		Transformation transformation;
@@ -133,7 +135,7 @@ public abstract class FrechetBasedAnonymization extends DistanceBasedAnonymizati
 			}
 			else{
 				tmp = t;
-				Transformation transformation = ((FrechetDistance)distance).distanceWithTransformationOptimized(pivot, tmp);
+				Transformation transformation = distance.distanceWithTransformationOptimized(pivot, tmp);
 				//System.out.println("Frechet distance between "+pivot+" and "+tmp+" could not be computed");
 				result.add(transformation);
 			}

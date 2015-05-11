@@ -15,8 +15,8 @@ import clustering.MyTrajectoryFormat;
 import distances.Distance;
 import distances.GPSDistance;
 
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
+import wrappers.Trajectory;
 
 
 public class Build {

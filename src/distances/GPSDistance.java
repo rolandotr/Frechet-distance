@@ -182,11 +182,5 @@ public class GPSDistance extends Distance{
 		throw new RuntimeException("no se debio llamar este metod, se debe usar siempre con las" +
 				"coordenadas GPS");
 	}
-	
-	@Override
-	public String getName() {
-		return "gps_distance";
-	}
-
 
 }

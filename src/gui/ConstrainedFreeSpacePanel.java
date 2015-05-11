@@ -6,7 +6,7 @@ import distances.FrechetDistance;
 import distances.FrechetDistanceEuclideanBased;
 import distances.Cell;
 
-import trajectory.Trajectory;
+import wrappers.Trajectory;
 
 
 

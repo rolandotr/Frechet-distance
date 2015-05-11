@@ -18,7 +18,7 @@ import clustering.Cluster;
 import distances.Distance;
 import distances.EuclideanDistance;
 
-import trajectory.Trajectory;
+import wrappers.Trajectory;
 
 
 public class Tables {

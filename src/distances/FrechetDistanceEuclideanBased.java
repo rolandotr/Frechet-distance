@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.TreeMap;
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import util.Geometry;
 import distances.Distance;
 import distances.EuclideanDistance;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 public class FrechetDistanceEuclideanBased extends FrechetDistance{
 
@@ -172,11 +172,6 @@ public class FrechetDistanceEuclideanBased extends FrechetDistance{
 		if (result1 < Math.min(t1, t2)) result1 = Math.min(t1, t2);
 		if (result2 > Math.max(t1, t2)) result2 = Math.max(t1, t2);
 		return new double[]{result1, result2};
-	}
-
-	@Override
-	public String getName() {
-		return "frechet_euclidean_based";
 	}
 
 }

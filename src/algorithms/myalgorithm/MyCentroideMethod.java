@@ -5,11 +5,11 @@ import java.util.List;
 
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 import distances.MyDynamicDistance;
 import distances.MyDynamicDistance.Transformation;
 
@@ -19,6 +19,7 @@ public class MyCentroideMethod extends MyAnonymization{
 
 	public MyCentroideMethod(String preffix, MyDynamicDistance distance) {
 		super(preffix, distance);
+		super.name = "MC";
 	}
 
 	@Override
@@ -66,11 +67,6 @@ public class MyCentroideMethod extends MyAnonymization{
 	
 	@Override
 	public String toString() {
-		return getName();
-	}
-
-	@Override
-	public String getName() {
 		return "my-centroide";
 	}
 

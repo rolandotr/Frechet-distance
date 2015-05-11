@@ -13,13 +13,13 @@ import distances.MyDynamicDistance.Transformation;
 import algorithms.generalization.GeneralizedTrajectory;
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import util.Syntetic;
 import util.Util;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 
 public class MyDistanceGPSBased extends MyDynamicDistance{
@@ -51,11 +51,6 @@ public class MyDistanceGPSBased extends MyDynamicDistance{
 			@Override
 			public double distance(Point p1, Point p2) {
 				throw new RuntimeException();
-			}
-			
-			@Override
-			public String getName() {
-				return "my_recursive_distance";
 			}
 		};
 		
@@ -113,9 +108,5 @@ public class MyDistanceGPSBased extends MyDynamicDistance{
 		return distance.distance(p1, p2);
 	}
 	
-	@Override
-	public String getName() {
-		return "my_dynamic_gps_based_distance";
-	}
 
 }

@@ -5,25 +5,25 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
-import algorithms.DistanceBasedAnonymizationMethod;
+import algorithms.AnonymizationMethod;
 
 import distances.Distance;
 import distances.FrechetDistance;
 import distances.FrechetDistanceEuclideanBased;
 import distances.Transformation;
 
-import trajectory.Trajectory;
-import trajectory.TrajectoryDataset;
 import util.Timer;
+import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * This method is based on the Frechet distance in its simplest variant.*/
-public abstract class JosepAnonymization extends DistanceBasedAnonymizationMethod{
+public abstract class JosepAnonymization extends AnonymizationMethod{
 
 	protected Distance distance;
 	
 	public JosepAnonymization(String preffix, Distance distance) {
-		super(preffix+"josep/", distance);
+		super(preffix, "josep");
+		this.distance = distance;
 	}
 	
 	@Override
@@ -31,8 +31,8 @@ public abstract class JosepAnonymization extends DistanceBasedAnonymizationMetho
 		//loadTrajectories();
 		List<List<Trajectory>> result = new LinkedList<List<Trajectory>>();
 		while (trajectories.size() >= k){
-			Trajectory centroide = TrajectoryDataset.findCentroide(trajectories);
-			Trajectory pivote = TrajectoryDataset.findCloserTrajectoryFrom(centroide, trajectories, distance);
+			Trajectory centroide = findCentroide(trajectories);
+			Trajectory pivote = findCloserTrajectoryFrom(centroide, trajectories, distance);
 			Hashtable<Trajectory, Double> partialResult = new Hashtable<Trajectory, Double>();
 			double worstDistance = -1;
 			Trajectory toRemove = null;			

@@ -10,10 +10,10 @@ import clustering.Cluster;
 import clustering.Cluster.PointInsideTrajectory;
 import distances.Distance;
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 public class NewSwapPoints extends DistortionMethod{
 

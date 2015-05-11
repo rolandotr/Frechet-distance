@@ -19,8 +19,6 @@ import range_queries.DAIQuery;
 import range_queries.PSIQuery;
 import range_queries.Query;
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import util.GnuPlot;
 import util.Latex;
 import util.Print;
@@ -28,7 +26,9 @@ import util.Statistics;
 import util.Timer;
 import util.Util;
 import wrappers.GPSFormat;
-import algorithms.DistanceBasedAnonymizationMethod;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
+import algorithms.AnonymizationMethod;
 import algorithms.frechet.FrechetCentroideMethod;
 import algorithms.frechet.FrechetTwiceCentroideMethod;
 import algorithms.generalization.GeneralizationCentroideMethod;
@@ -120,7 +120,7 @@ public class ComparingMethods {
 		//all the results of this method will be stored in a folder named folderOfDestiny.
 		//Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadTrajecotries(folderOfDataSet);
 		Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadCompressedTrajecotries(folderOfDataSet);
-		DistanceBasedAnonymizationMethod[] methods = new DistanceBasedAnonymizationMethod[4];
+		AnonymizationMethod[] methods = new AnonymizationMethod[4];
 		methods[0] = new MyCentroideMethod(folderOfDataSet, new MyDistanceGPSBased(3));
 		methods[1] = new MyCentroideMethod(folderOfDataSet, new MyLightContextDependantDynamicDistance(3) {
 			@Override
@@ -135,11 +135,8 @@ public class ComparingMethods {
 			public double distance(Point p1, Point p2) {
 				throw new RuntimeException();
 			}
-			@Override
-			public String getName() {
-				return "light_dynamic_distance";
-			}
 		});
+		methods[1].setName("mylightone");
 		//methods[2] = new MyCentroideMethod(folderOfDataSet, new MyDistanceGPSBased(3));
 		methods[2] = new GeneralizationCentroideMethod(folderOfDataSet, new LogCostDistance());
 		methods[3] = new JosepCentroideMethod(folderOfDataSet, new JosepGPSDistanceOnTheFlyVs2());
@@ -207,7 +204,7 @@ public class ComparingMethods {
 		//all the results of this method will be stored in a folder named folderOfDestiny.
 		//Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadTrajecotries(folderOfDataSet);
 		Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadCompressedTrajecotries(folderOfDataSet);
-		DistanceBasedAnonymizationMethod[] methods = new DistanceBasedAnonymizationMethod[4];
+		AnonymizationMethod[] methods = new AnonymizationMethod[4];
 		methods[0] = new MyCentroideMethod(folderOfDataSet, new MyDistanceEuclideanBased(3));
 		methods[1] = new MyCentroideMethod(folderOfDataSet, new MyLightContextDependantDynamicDistance(3) {
 			@Override
@@ -222,11 +219,8 @@ public class ComparingMethods {
 			public double distance(Point p1, Point p2) {
 				throw new RuntimeException();
 			}
-			@Override
-			public String getName() {
-				return "myligthtone";
-			}
 		});
+		methods[1].setName("mylightone");
 		//methods[2] = new MyCentroideMethod(folderOfDataSet, new MyDistanceGPSBased(3));
 		methods[2] = new GeneralizationCentroideMethod(folderOfDataSet, new LogCostDistance());
 		methods[3] = new JosepCentroideMethod(folderOfDataSet, new JosepEuclideanDistanceOnTheFlyVs2());
@@ -294,7 +288,7 @@ public class ComparingMethods {
 		//all the results of this method will be stored in a folder named folderOfDestiny.
 		//Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadTrajecotries(folderOfDataSet);
 		Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadCompressedTrajecotries(folderOfDataSet);
-		DistanceBasedAnonymizationMethod[] methods = new DistanceBasedAnonymizationMethod[4];
+		AnonymizationMethod[] methods = new AnonymizationMethod[4];
 		methods[0] = new MyCentroideMethod(folderOfDataSet, new MyDistanceGPSBased(3));
 		methods[1] = new MyCentroideMethod(folderOfDataSet, new MyLightContextDependantDynamicDistance(3) {
 			@Override
@@ -309,11 +303,8 @@ public class ComparingMethods {
 			public double distance(Point p1, Point p2) {
 				throw new RuntimeException();
 			}
-			@Override
-			public String getName() {
-				return "light_dynamic_distance";
-			}
 		});
+		methods[1].setName("mylightone");
 		//methods[2] = new MyCentroideMethod(folderOfDataSet, new MyDistanceGPSBased(3));
 		methods[2] = new GeneralizationCentroideMethod(folderOfDataSet, new LogCostDistance());
 		methods[3] = new JosepCentroideMethod(folderOfDataSet, new JosepGPSDistanceOnTheFlyVs2());
@@ -430,7 +421,7 @@ public class ComparingMethods {
 	private static void tabularComparisonFromDisk(String folderOfDataSet, String folderOfDestiny) throws IOException, ClassNotFoundException{
 		//all the results of this method will be stored in a folder named folderOfDestiny.
 		Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadTrajecotries(folderOfDataSet);
-		DistanceBasedAnonymizationMethod[] methods = new DistanceBasedAnonymizationMethod[5];
+		AnonymizationMethod[] methods = new AnonymizationMethod[5];
 		methods[0] = new MyCentroideMethod(folderOfDataSet, new MyDistanceGPSBased(3));
 		methods[1] = new MyCentroideMethod(folderOfDataSet, new MyLightContextDependantDynamicDistance(3) {
 			@Override
@@ -445,11 +436,8 @@ public class ComparingMethods {
 			public double distance(Point p1, Point p2) {
 				throw new RuntimeException();
 			}
-			@Override
-			public String getName() {
-				return "myligthtone";
-			}
 		});
+		methods[1].setName("mylightone");
 		methods[2] = new MyCentroideMethod(folderOfDataSet, new MyDistanceGPSBased(3));
 		methods[3] = new GeneralizationCentroideMethod(folderOfDataSet, new LogCostDistance());
 		methods[4] = new JosepCentroideMethod(folderOfDataSet, new JosepGPSDistanceOnTheFlyVs2());
@@ -508,7 +496,7 @@ public class ComparingMethods {
 	}
 	
 	private static double[][] getValuesInTabularForm(
-			DistanceBasedAnonymizationMethod[] methods, double[][][][] values, int radiousIndex, int timeIndex) {
+			AnonymizationMethod[] methods, double[][][][] values, int radiousIndex, int timeIndex) {
 		int cont = 0;
 		double[][] result = new double[methods.length][methods.length];
 		for (int a = 0; a < methods.length; a++) {
@@ -520,7 +508,7 @@ public class ComparingMethods {
 	}
 	
 	private static double[] getValuesInTabularFormOneToOne(
-			DistanceBasedAnonymizationMethod[] methods, double[][][] values, int radiousIndex, int timeIndex) {
+			AnonymizationMethod[] methods, double[][][] values, int radiousIndex, int timeIndex) {
 		int cont = 0;
 		double[] result = new double[methods.length];
 		for (int a = 0; a < methods.length; a++) {
@@ -529,7 +517,7 @@ public class ComparingMethods {
 		return result;
 	}
 
-	private static void printTables(DistanceBasedAnonymizationMethod[] methods, double[][][][] values, String folderForK, String preffix) throws IOException {
+	private static void printTables(AnonymizationMethod[] methods, double[][][][] values, String folderForK, String preffix) throws IOException {
 		String[] labels  = new String[methods.length];
 		for (int i = 0; i < methods.length; i++) {
 			labels[i] = methods[i].getName();
@@ -545,7 +533,7 @@ public class ComparingMethods {
 	}
 
 	private static Hashtable<String, double[][]> createCrossedTable(
-			double[][][][] values, DistanceBasedAnonymizationMethod[] methods) {
+			double[][][][] values, AnonymizationMethod[] methods) {
 		Hashtable<String, double[][]> result = new Hashtable<String, double[][]>();
 		for (int i = 0; i < methods.length; i++) {
 			for (int j = 0; j < methods.length; j++) {
@@ -563,7 +551,7 @@ public class ComparingMethods {
 	}
 
 	private static Hashtable<String, double[][]> createCrossedTable(
-			double[][][] values, DistanceBasedAnonymizationMethod[] methods) {
+			double[][][] values, AnonymizationMethod[] methods) {
 		Hashtable<String, double[][]> result = new Hashtable<String, double[][]>();
 		for (int i = 0; i < methods.length; i++) {
 			double[][] tmp = new double[SPATIAL_RANGE.length][TEMPORAL_RANGE.length];
@@ -701,7 +689,7 @@ public class ComparingMethods {
 	}
 	
 	private static void tabularComparisonBetweenFrechet() throws IOException, ClassNotFoundException{
-		DistanceBasedAnonymizationMethod[] methods = new DistanceBasedAnonymizationMethod[3];
+		AnonymizationMethod[] methods = new AnonymizationMethod[3];
 		String folder = "real";
 		methods[0] = new FrechetCentroideMethod(folder, new FrechetDistanceGPSBased(0.0));
 		methods[1] = new FrechetCentroideMethod(folder, new FrechetDistanceGPSBased(0.2));
@@ -882,7 +870,7 @@ public class ComparingMethods {
 	}
 	
 	
-	private static void comparingAll(DistanceBasedAnonymizationMethod[] methods) throws IOException, ClassNotFoundException {
+	private static void comparingAll(AnonymizationMethod[] methods) throws IOException, ClassNotFoundException {
 		int[] ks = new int[]{8};
 		//int[] ks = new int[]{4, 8, 16};
 		//Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadTrajecotries(preffix);
@@ -934,7 +922,7 @@ public class ComparingMethods {
 		}
 	}
 
-	private static double[][] getValuesInTabularForm(DistanceBasedAnonymizationMethod[] methods, String preffix, int k) throws IOException, ClassNotFoundException {
+	private static double[][] getValuesInTabularForm(AnonymizationMethod[] methods, String preffix, int k) throws IOException, ClassNotFoundException {
 		//Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadTrajecotries(preffix);
 		Hashtable<String, Trajectory> dst = MyTrajectoryFormat.loadCompressedTrajecotries(preffix);
 		GPSDistance gpsDist = new GPSDistance();		

@@ -10,11 +10,11 @@ import java.util.TreeMap;
 import distances.MyDynamicDistance.Transformation;
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 public abstract class MyLightContextDependantDynamicDistance extends MyDynamicDistance{
 

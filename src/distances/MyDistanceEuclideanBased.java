@@ -9,11 +9,11 @@ import java.util.List;
 import algorithms.generalization.GeneralizedTrajectory;
 
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
 import wrappers.SimpleFormat;
+import wrappers.SimpleTrajectory;
+import wrappers.Trajectory;
 
 
 public class MyDistanceEuclideanBased extends MyDynamicDistance{
@@ -41,9 +41,5 @@ public class MyDistanceEuclideanBased extends MyDynamicDistance{
 		return distance.distance(p1, p2);
 	}
 	
-	@Override
-	public String getName() {
-		return "my_dynamic_euclidean_based_distance";
-	}
 
 }

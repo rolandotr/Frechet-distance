@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 
-import trajectory.Trajectory;
 import util.Vertex;
 import wrappers.GPSFormat;
+import wrappers.Trajectory;
 
 public class JosepGPSDistanceOnTheFly extends GPSDistance{
 

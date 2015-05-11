@@ -7,9 +7,9 @@ import java.util.List;
 import algorithms.generalization.GeneralizedTrajectory;
 
 
-import trajectory.Trajectory;
 import wrappers.GPSFormat;
 import wrappers.GeneralizedPoint;
+import wrappers.Trajectory;
 
 public class LogCostDistance extends Distance{
 
@@ -177,10 +177,5 @@ public class LogCostDistance extends Distance{
 		}
 	}
 	
-	@Override
-	public String getName() {
-		return "log_cost_distance";
-	}
-
 
 }
