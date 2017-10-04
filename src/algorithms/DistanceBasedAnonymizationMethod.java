@@ -15,12 +15,11 @@ import java.util.TreeMap;
 import clustering.MyTrajectoryFormat;
 import distances.Distance;
 
-import trajectory.SimpleTrajectory;
-import trajectory.Trajectory;
 import trajectory.TrajectoryDatasetLoader;
 import util.Util;
 import wrappers.GPSFormat;
 import wrappers.SimpleFormat;
+import wrappers.Trajectory;
 
 /*Trujillo- May 15, 2013
  * As a rule, an anonymization method can be especified by the distance metric it uses and

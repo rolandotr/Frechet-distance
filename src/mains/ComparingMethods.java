@@ -53,8 +53,10 @@ import distances.Transformation;
 public class ComparingMethods {
 
 	//private static final double[] SPATIAL_RANGE = new double[]{0, 0.2, 0.5, 1, 2, 5};//in Km 
-	private static final double[] SPATIAL_RANGE = new double[]{0, 20, 50, 100, 200, 500};//in Km 
-	private static final long[] TEMPORAL_RANGE = new long[]{0, 5*60, 10*60, 30*60, 60*60, 5*60*60};//in seconds 
+	//private static final double[] SPATIAL_RANGE = new double[]{0, 20, 50, 100, 200, 500};//in Km 
+	private static final double[] SPATIAL_RANGE = new double[]{500};//in Km 
+	//private static final long[] TEMPORAL_RANGE = new long[]{0, 5*60, 10*60, 30*60, 60*60, 5*60*60};//in seconds 
+	private static final long[] TEMPORAL_RANGE = new long[]{0, 5*60, 10*60, 30*60, 60*60};//in seconds 
 	private static final int[] K = new int[]{4};//cluster sizes 
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException {

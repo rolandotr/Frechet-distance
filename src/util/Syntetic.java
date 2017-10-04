@@ -742,7 +742,7 @@ public class Syntetic {
 
 	public static void buildingSyntetic() throws IOException {
 
-		buildingAllTrajectories("syntetic.txt", "syntetic");
+		buildingAllTrajectories("oldenburg.txt", "syntetic");
 		buildingAllSynteticTrajectories();
 		saveCompressedTrajectories2D("syntetic", 0.0d);
 
@@ -785,7 +785,7 @@ public class Syntetic {
 	public static void main(String[] args) throws IOException,
 			ClassNotFoundException {
 		buildingSyntetic();
-		buildingReal();
+		//buildingReal();
 		//buildingToy();
 	}
 
